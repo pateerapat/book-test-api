@@ -14,17 +14,19 @@ app.use(cors());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
+// Import Routes
+
+const routeUser = require("./routes/user-route");
+
+// Routes
+
 app.get("/", (req, res) => {
     res.status(200).json({
         message: "THIS IS AN API",
     });
 });
 
-// Import Routes
-
-
-
-// Routes
+app.use("/user", routeUser);
 
 app.use((req, res, next) => {
     const err = new Error("Not Found");

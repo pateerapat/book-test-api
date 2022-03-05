@@ -17,6 +17,7 @@
     "express-validator": "^6.14.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-check-expiration": "^1.0.5",
+    "mongoose": "^6.2.4",
     "nodemon": "^2.0.15"
   }
 }
