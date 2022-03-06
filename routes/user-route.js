@@ -15,9 +15,9 @@ const {
 
 // Create Routes
 
-router.post("/register", [body("id").notEmpty(), body('password').notEmpty(), body('name').notEmpty(), body('lastname').notEmpty(), 
-body('user_address').notEmpty(), body('email').notEmpty()], apiValidation, registerController);
+router.post("/register", [body("id").notEmpty(), body("password").notEmpty(), body("name").notEmpty(), body("lastname").notEmpty(), 
+body("user_address").notEmpty(), body("email").notEmpty(), body("user_point").notEmpty()], apiValidation, registerController);
 
-router.post("/login", [body("username").notEmpty(), body("password").notEmpty], apiValidation, loginController);
+router.post("/login", [body("id").notEmpty(), body("password").notEmpty()], apiValidation, loginController);
 
 module.exports = router;

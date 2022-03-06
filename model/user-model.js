@@ -6,7 +6,7 @@ const { sign } = require("jsonwebtoken");
 // Import Mongo Method
 
 const { 
-    findOneData, insertData 
+    findOneData, insertData, incrementOneData 
 } = require("../core/mongo-method");
 
 // Import Function
@@ -17,7 +17,7 @@ const {
 module.exports = {
     checkRegister: async (data) => {
         try {
-            let response = await findOneData(data);
+            let response = await findOneData("users", data);
             if (response.success) {
                 response = {
                     success: false,
@@ -35,12 +35,12 @@ module.exports = {
             };
             return response;
         } catch (err) {
-            next(err);
+            console.log(err);
         };
     },
     register: async (data) => {
         try {
-            let response = await insertData("user", data);
+            let response = await insertData("users", data);
             if (response.success) {
                 response = {
                     success: true,
@@ -58,14 +58,12 @@ module.exports = {
             };
             return response;
         } catch (err) {
-            next(err);
+            console.log(err);
         };
     },
     checkLogin: async (data) => {
         try {
-            let response = await findOneData({
-                username: data.username,
-            });
+            let response = await findOneData("users", data);
             if (response.success) {
                 response = {
                     success: true,
@@ -83,13 +81,13 @@ module.exports = {
             };
             return response;
         } catch (err) {
-            next(err);
+            console.log(err);
         };
     },
     login: async (data) => {
         try {
-            const userData = await findOneData({
-                username: data.username,
+            const userData = await findOneData("users", {
+                "id": data.id,
             });
             const match = await bcrypt.compare(data.password, userData.payload.data.password);
             if (match) {
@@ -112,7 +110,30 @@ module.exports = {
                 };
             };
         } catch (err) {
-            next(err);
+            console.log(err);
+        };
+    },
+    pointIncrementer: async (data) => {
+        try {
+            let response = await incrementOneData("users", { id: data.id }, { user_point: data.point });
+            if (response.success) {
+                response = {
+                    success: true,
+                    payload: {
+                        message: "Point incremented.",
+                    },
+                };
+            } else {
+                response = {
+                    success: false,
+                    payload: {
+                        message: "Failed to incremented.",
+                    },
+                };
+            };
+            return response;
+        } catch (err) {
+            console.log(err);
         };
     },
 };

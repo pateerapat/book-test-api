@@ -7,6 +7,16 @@ const reqString = {
     required: true,
 };
 
+const reqArray = {
+    type: Array,
+    required: true,
+};
+
+const reqNumber = {
+    type: Number,
+    required: true,
+};
+
 const userSchema = mongoose.Schema({
     id: reqString,
     password: reqString,
@@ -14,7 +24,7 @@ const userSchema = mongoose.Schema({
     lastname: reqString,
     user_address: reqString,
     email: reqString,
-    user_point: reqString,
+    user_point: reqNumber,
 });
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("users", userSchema);

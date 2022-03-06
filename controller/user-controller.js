@@ -10,6 +10,7 @@ const {
     login,
     checkRegister,
     register,
+    pointIncrementer,
 } = require("../model/user-model");
 
 
@@ -19,7 +20,7 @@ module.exports = {
     loginController: async (req, res, next) => {
         try {
             const resultCheck = await checkLogin({
-                username: req.body.username,
+                id: req.body.id,
             });
             if (resultCheck.success) {
                 const resultLogin = await login(req.body);
@@ -44,7 +45,7 @@ module.exports = {
             });
             if (emailCheck.success) {
                 const usernameCheck = await checkRegister({
-                    username: req.body.username,
+                    id: req.body.id,
                 });
                 if (usernameCheck.success) {
                     const password = await bcrypt.hash(req.body.password, 10);
@@ -67,6 +68,19 @@ module.exports = {
                         message: "Email has been used.",
                     },
                 });
+            };
+        } catch (err) {
+            next(err);
+        };
+    },
+    incrementController: async (req, res, next) => {
+        try {
+            const resultCheck = await pointIncrementer(req.body);
+            if (resultCheck.success) {
+                res.status(200).json(resultCheck);
+                res.end();
+            } else {
+                res.status(200).json(resultCheck);
             };
         } catch (err) {
             next(err);

@@ -7,11 +7,11 @@ const userSchema = require("../schemas/user-schema");
 
 module.exports = {
     insertData: async (collectionName, data) => {
-        await connect().then(async (mongoose) => {
+        let payload = await connect().then(async (mongoose) => {
             try {
-                if (collectionName == "user") {
+                if (collectionName == "users") {
                     collectionName = userSchema;
-                }
+                };
                 await new collectionName(data).save();
                 return result = {
                     success: true,
@@ -20,11 +20,15 @@ module.exports = {
                 mongoose.connection.close();
             };
         });
+        return payload;
     },
-    findManyData: async (query) => {
-        await connect().then(async (mongoose) => {
+    findManyData: async (collectionName, query) => {
+        let payload = await connect().then(async (mongoose) => {
             try {
-                const result = await userSchema.find(query);
+                if (collectionName == "users") {
+                    collectionName = userSchema;
+                };
+                let result = await collectionName.find(query);
                 if (result.length == 0) {
                     result = {
                         success: false,
@@ -45,12 +49,16 @@ module.exports = {
                 mongoose.connection.close();
             };
         });
+        return payload;
     },
-    findOneData: async (query) => {
-        await connect().then(async (mongoose) => {
+    findOneData: async (collectionName, query) => {
+        let payload = await connect().then(async (mongoose) => {
             try {
-                const result = await userSchema.findOne(query);
-                if (result.length == 0) {
+                if (collectionName == "users") {
+                    collectionName = userSchema;
+                };
+                let result = await collectionName.findOne(query);
+                if (result == null) {
                     result = {
                         success: false,
                         payload: {
@@ -67,6 +75,22 @@ module.exports = {
                 };
                 return result;
             } finally {
+                mongoose.connection.close();
+            };
+        });
+        return payload;
+    },
+    incrementOneData: async (collectionName, query, incrementer) => {
+        let payload = await connect().then(async (mongoose) => {
+            try {
+                if (collectionName == "users") {
+                    collectionName = userSchema;
+                };
+                let result = await collectionName.updateOne(query, { $inc: incrementer });
+                return result = {
+                    success: true,
+                };
+            }finally {
                 mongoose.connection.close();
             };
         });
