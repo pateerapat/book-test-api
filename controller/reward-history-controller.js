@@ -11,7 +11,6 @@ const {
     addHistory,
 } = require("../model/reward-history-model");
 
-
 // Create Controller
 
 module.exports = {

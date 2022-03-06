@@ -10,7 +10,6 @@ const {
     getRewardById,
 } = require("../model/reward-model");
 
-
 // Create Controller
 
 module.exports = {

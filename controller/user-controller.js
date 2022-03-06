@@ -14,7 +14,6 @@ const {
     pointIncrementer,
 } = require("../model/user-model");
 
-
 // Create Controller
 
 module.exports = {

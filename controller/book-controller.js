@@ -10,7 +10,6 @@ const {
     getBookById,
 } = require("../model/book-model");
 
-
 // Create Controller
 
 module.exports = {
