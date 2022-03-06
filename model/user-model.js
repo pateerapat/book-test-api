@@ -84,7 +84,7 @@ module.exports = {
                 response = {
                     success: false,
                     payload: {
-                        message: "Register failed",
+                        message: "Register failed.",
                     },
                 };
             };
