@@ -19,6 +19,10 @@ app.use(bodyparser.urlencoded({ extended: false }));
 // Import Routes
 
 const routeUser = require("./routes/user-route");
+const routeBook = require("./routes/book-route");
+// const routeOwnedBook = require("./routes/owned-book-route");
+const routeReward = require("./routes/reward-route");
+routeRewardHistory = require("./routes/reward-history-route");
 
 // Routes
 
@@ -29,6 +33,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", routeUser);
+app.use("/book", routeBook);
+// app.use("/owned-book", routeOwnedBook);
+app.use("/reward", routeReward);
+app.use("/history", routeRewardHistory);
 
 app.use((req, res, next) => {
     const err = new Error("Not Found");

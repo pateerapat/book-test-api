@@ -1,23 +1,42 @@
 // Config
 
+const connect = require("../core/connect");
 const bcrypt = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
 
-// Import Mongo Method
-
-const { 
-    findOneData, insertData, incrementOneData 
-} = require("../core/mongo-method");
+// Import Schema
+const userSchema = require("../schemas/user-schema");
 
 // Import Function
 
-
-
 // Create Model
 module.exports = {
-    checkRegister: async (data) => {
+    checkRegister: async (query) => {
         try {
-            let response = await findOneData("users", data);
+            let response = await connect().then(async (mongoose) => {
+                try {
+                    let result = await userSchema.findOne(query);
+                    if (result == null) {
+                        result = {
+                            success: false,
+                            payload: {
+                                message: "No data found.",
+                            },
+                        };
+                    } else {
+                        result = {
+                            success: true,
+                            payload: {
+                                data: result,
+                            },
+                        };
+                    };
+                    return result;
+                } finally {
+                    mongoose.connection.close();
+                };
+            });
+
             if (response.success) {
                 response = {
                     success: false,
@@ -40,7 +59,20 @@ module.exports = {
     },
     register: async (data) => {
         try {
-            let response = await insertData("users", data);
+            let response = await connect().then(async (mongoose) => {
+                try {
+                    await new userSchema(data).save();
+                    return result = {
+                        success: true,
+                    };
+                } catch (err) {
+                    return result = {
+                        success: false,
+                    };
+                } finally {
+                    mongoose.connection.close();
+                };
+            });
             if (response.success) {
                 response = {
                     success: true,
@@ -61,9 +93,31 @@ module.exports = {
             console.log(err);
         };
     },
-    checkLogin: async (data) => {
+    checkLogin: async (query) => {
         try {
-            let response = await findOneData("users", data);
+            let response = await connect().then(async (mongoose) => {
+                try {
+                    let result = await userSchema.findOne(query);
+                    if (result == null) {
+                        result = {
+                            success: false,
+                            payload: {
+                                message: "No data found.",
+                            },
+                        };
+                    } else {
+                        result = {
+                            success: true,
+                            payload: {
+                                data: result,
+                            },
+                        };
+                    };
+                    return result;
+                } finally {
+                    mongoose.connection.close();
+                };
+            });
             if (response.success) {
                 response = {
                     success: true,
@@ -84,12 +138,34 @@ module.exports = {
             console.log(err);
         };
     },
-    login: async (data) => {
+    login: async (query) => {
         try {
-            const userData = await findOneData("users", {
-                "id": data.id,
+            const userData = await connect().then(async (mongoose) => {
+                try {
+                    let result = await userSchema.findOne({
+                        "id": query.id,
+                    });
+                    if (result == null) {
+                        result = {
+                            success: false,
+                            payload: {
+                                message: "No data found.",
+                            },
+                        };
+                    } else {
+                        result = {
+                            success: true,
+                            payload: {
+                                data: result,
+                            },
+                        };
+                    };
+                    return result;
+                } finally {
+                    mongoose.connection.close();
+                };
             });
-            const match = await bcrypt.compare(data.password, userData.payload.data.password);
+            const match = await bcrypt.compare(query.password, userData.payload.data.password);
             if (match) {
                 const jsonToken = sign({ result: userData.payload.data }, process.env.SECRET, {
                     expiresIn: "1d",
@@ -113,9 +189,22 @@ module.exports = {
             console.log(err);
         };
     },
-    pointIncrementer: async (data) => {
+    pointIncrementer: async (query) => {
         try {
-            let response = await incrementOneData("users", { id: data.id }, { user_point: data.point });
+            let response = await connect().then(async (mongoose) => {
+                try {
+                    let result = await userSchema.updateOne({ id: query.id }, { $inc: { user_point: query.point } });
+                    return result = {
+                        success: true,
+                    };
+                } catch (err) {
+                    return result = {
+                        success: false,
+                    };
+                } finally {
+                    mongoose.connection.close();
+                };
+            });
             if (response.success) {
                 response = {
                     success: true,

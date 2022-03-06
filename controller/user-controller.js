@@ -1,7 +1,8 @@
 // Config
 
-const { sign, jwt } = require("jsonwebtoken");
+const { sign } = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // Import Models
 
@@ -75,15 +76,30 @@ module.exports = {
     },
     incrementController: async (req, res, next) => {
         try {
-            const resultCheck = await pointIncrementer(req.body);
-            if (resultCheck.success) {
-                res.status(200).json(resultCheck);
-                res.end();
-            } else {
-                res.status(200).json(resultCheck);
-            };
+            const response = await pointIncrementer(req.body);
+            res.status(200).json(response);
+            res.end();
         } catch (err) {
             next(err);
         };
+    },
+    getDataController: async (req, res, next) => {
+        try {
+            const userData = jwt.verify(
+                req.token,
+                process.env.SECRET,
+                (err, authData) => {
+                    return authData.result;
+                },
+            );
+            res.status(200).json({
+                success: true,
+                    payload: {
+                        data: userData,
+                    },
+            });
+        } catch (err) {
+            next(err);
+        }
     },
 };

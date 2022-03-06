@@ -11,6 +11,8 @@ const apiValidation = require("../validation/apiValidation");
 const {
     registerController,
     loginController,
+    incrementController,
+    getDataController,
 } = require("../controller/user-controller");
 
 // Create Routes
@@ -19,5 +21,9 @@ router.post("/register", [body("id").notEmpty(), body("password").notEmpty(), bo
 body("user_address").notEmpty(), body("email").notEmpty(), body("user_point").notEmpty()], apiValidation, registerController);
 
 router.post("/login", [body("id").notEmpty(), body("password").notEmpty()], apiValidation, loginController);
+
+router.post("/point", [body("id").notEmpty(), body("point").notEmpty()], apiValidation, verifyToken, incrementController);
+
+router.get("/get/data", apiValidation, verifyToken, getDataController);
 
 module.exports = router;
