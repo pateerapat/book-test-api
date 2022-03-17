@@ -11,7 +11,7 @@ const historySchema = require("../schemas/reward-history-schema");
 
 // Create Model
 module.exports = {
-    getAllHistory: async (query) => {
+    getAllUserHistory: async (query) => {
         try {
             let response = await connect().then(async (mongoose) => {
                 try {
@@ -84,6 +84,36 @@ module.exports = {
                     },
                 };
             };
+            return response;
+        } catch (err) {
+            console.log(err);
+        };
+    },
+    getAllHistory: async () => {
+        try {
+            const response = await connect().then(async (mongoose) => {
+                try {
+                    let result = await historySchema.find({});
+                    if (result.length == 0) {
+                        result = {
+                            success: false,
+                            payload: {
+                                message: "No data found.",
+                            },
+                        };
+                    } else {
+                        result = {
+                            success: true,
+                            payload: {
+                                data: result,
+                            },
+                        };
+                    };
+                    return result;
+                } finally {
+                    mongoose.connection.close();
+                };
+            });
             return response;
         } catch (err) {
             console.log(err);

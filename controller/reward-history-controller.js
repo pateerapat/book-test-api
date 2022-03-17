@@ -8,13 +8,14 @@ const jwt = require("jsonwebtoken");
 
 const {
     getAllHistory,
+    getAllUserHistory,
     addHistory,
 } = require("../model/reward-history-model");
 
 // Create Controller
 
 module.exports = {
-    getAllHistoryController: async (req, res, next) => { 
+    getAllUserHistoryController: async (req, res, next) => { 
         try {
             const userId = jwt.verify(
                 req.token,
@@ -25,7 +26,7 @@ module.exports = {
                     };
                 },
             );
-            const response = await getAllHistory(userId);
+            const response = await getAllUserHistory(userId);
             res.status(200).json(response);
             res.end();
         } catch (err) {
@@ -40,5 +41,14 @@ module.exports = {
         } catch (err) {
             next(err);
         };
-    }, 
+    },
+    getAllHistoryController: async (req, res, next) => { 
+        try {
+            const response = await getAllHistory();
+            res.status(200).json(response);
+            res.end();
+        } catch (err) {
+            next(err);
+        };
+    },
 };
