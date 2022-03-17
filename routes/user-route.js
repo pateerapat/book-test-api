@@ -18,7 +18,7 @@ const {
 // Create Routes
 
 router.post("/register", [body("id").notEmpty(), body("password").notEmpty(), body("name").notEmpty(), body("lastname").notEmpty(), 
-body("user_address").notEmpty(), body("email").notEmpty(), body("user_point").notEmpty()], apiValidation, registerController);
+body("user_address").notEmpty(), body("email").notEmpty(), body("user_point").notEmpty(), body("role").notEmpty()], apiValidation, registerController);
 
 router.post("/login", [body("id").notEmpty(), body("password").notEmpty()], apiValidation, loginController);
 

@@ -25,6 +25,7 @@ const userSchema = mongoose.Schema({
     user_address: reqString,
     email: reqString,
     user_point: reqNumber,
+    role: reqString,
 });
 
 module.exports = mongoose.model("users", userSchema);

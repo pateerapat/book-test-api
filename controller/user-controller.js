@@ -14,6 +14,13 @@ const {
     pointIncrementer,
 } = require("../model/user-model");
 
+// Import Functions
+
+const { validateEmail,
+        validatePassword,
+        validateUser
+} = require("../functions/functions");
+
 // Create Controller
 
 module.exports = {
@@ -40,6 +47,36 @@ module.exports = {
     },
     registerController: async (req, res, next) => {
         try {
+            const validEmailCheck = validateEmail(req.body.email);
+            if (!validEmailCheck) {
+                return res.status(200).json({
+                    success: false,
+                    payload: {
+                        message: "Email is not valid.",
+                    },
+                });
+            };
+
+            const validUserCheck = validateUser(req.body.id);
+            if (!validUserCheck) {
+                return res.status(200).json({
+                    success: false,
+                    payload: {
+                        message: "Username is not long enough. (3 is minimum length)",
+                    },
+                });
+            };
+
+            const validPasswordCheck = validatePassword(req.body.password);
+            if (!validPasswordCheck) {
+                return res.status(200).json({
+                    success: false,
+                    payload: {
+                        message: "Password is not long enough. (8 is minimum length)",
+                    },
+                });
+            };
+
             const emailCheck = await checkRegister({
                 email: req.body.email,
             });
