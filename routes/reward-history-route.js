@@ -20,6 +20,6 @@ router.post("/add", [body("user_id").notEmpty(), body("reward_id").notEmpty(), b
 
 router.get("/get/user/all", apiValidation, verifyToken, getAllUserHistoryController);
 
-router.get("/get/all", apiValidation, verifyToken, getAllHistoryController);
+router.get("/get/all", apiValidation, getAllHistoryController);
 
 module.exports = router;
