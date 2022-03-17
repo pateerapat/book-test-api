@@ -71,4 +71,128 @@ module.exports = {
             console.log(err);
         };
     },
+    insertReward: async (data) => {
+        try {
+            let response = await connect().then(async (mongoose) => {
+                try {
+                    await new rewardSchema(data).save();
+                    return result = {
+                        success: true,
+                    };
+                } catch (err) {
+                    return result = {
+                        success: false,
+                    };
+                } finally {
+                    mongoose.connection.close();
+                };
+            });
+            if (response.success) {
+                response = {
+                    success: true,
+                    payload: {
+                        message: "Insert successful.",
+                    },
+                };
+            } else {
+                response = {
+                    success: false,
+                    payload: {
+                        message: "Insert failed.",
+                    },
+                };
+            };
+            return response;
+        } catch (err) {
+            console.log(err);
+        };
+    },
+    updateReward: async (data) => {
+        try {
+            let response = await connect().then(async (mongoose) => {
+                try {
+                    await rewardSchema.findOneAndUpdate(
+                        {
+                            id: data.oldId,
+                        },
+                        {
+                            id: data.id,
+                            author: data.author,
+                            cover_img: data.cover_img,
+                            name: data.name,
+                            price: data.price,
+                            publisher: data.publisher,
+                            story: data.story,
+                            synopsis: data.synopsis,
+                        },
+                    );
+                    return result = {
+                        success: true,
+                    };
+                } catch (err) {
+                    return result = {
+                        success: false,
+                    };
+                } finally {
+                    mongoose.connection.close();
+                };
+            });
+            if (response.success) {
+                response = {
+                    success: true,
+                    payload: {
+                        message: "Update successful.",
+                    },
+                };
+            } else {
+                response = {
+                    success: false,
+                    payload: {
+                        message: "Update failed.",
+                    },
+                };
+            };
+            return response;
+        } catch (err) {
+            console.log(err);
+        };
+    },
+    deleteReward: async (data) => {
+        try {
+            let response = await connect().then(async (mongoose) => {
+                try {
+                    await rewardSchema.deleteOne({
+                        id: data.id,
+                    });
+                    return result = {
+                        success: true,
+                    };
+                } catch (err) {
+                    return result = {
+                        success: false,
+                    };
+                } finally {
+                    mongoose.connection.close();
+                };
+            });
+            if (response.success) {
+                response = {
+                    success: true,
+                    payload: {
+                        message: "Delete successful.",
+                    },
+                };
+            } else {
+                response = {
+                    success: false,
+                    payload: {
+                        message: "Delete failed.",
+                    },
+                };
+            };
+            return response;
+        } catch (err) {
+            console.log(err);
+        };
+    },
 };

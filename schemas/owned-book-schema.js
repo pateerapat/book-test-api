@@ -12,4 +12,4 @@ const ownedBookSchema = mongoose.Schema({
     user_id: reqString,
 });
 
-module.exports = mongoose.model("owned-books", ownedBookSchema);
+module.exports = mongoose.model("owned_books", ownedBookSchema);
