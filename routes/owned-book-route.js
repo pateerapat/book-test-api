@@ -17,6 +17,6 @@ const {
 
 router.post("/buy", [ body("book_id").notEmpty()], apiValidation, verifyToken, buyBookController);
 
-router.get("/get/user/all", [ body("id").notEmpty()], apiValidation, getOwnedBookController);
+router.post("/get/user/all", [ body("id").notEmpty()], apiValidation, getOwnedBookController);
 
 module.exports = router;
