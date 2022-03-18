@@ -35,14 +35,7 @@ module.exports = {
     },
     getOwnedBookController: async (req, res, next) => { 
         try {
-            const userData = jwt.verify(
-                req.token,
-                process.env.SECRET,
-                (err, authData) => {
-                    return authData.result;
-                },
-            );
-            const response = await getOwnedBook(userData.id);
+            const response = await getOwnedBook(req.body.id);
             res.status(200).json(response);
             res.end();
         } catch (err) {
