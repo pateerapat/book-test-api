@@ -117,13 +117,10 @@ module.exports = {
                         },
                         {
                             id: data.id,
-                            author: data.author,
                             cover_img: data.cover_img,
                             name: data.name,
                             price: data.price,
-                            publisher: data.publisher,
-                            story: data.story,
-                            synopsis: data.synopsis,
+                            in_stock: data.in_stock,
                         },
                     );
                     return result = {
