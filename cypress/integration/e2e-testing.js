@@ -1,4 +1,4 @@
-describe('Backend Integration Testing', () => {
+describe('Backend E2E Testing', () => {
     it('should successfully registered account', () => {
         cy.request('POST', 'https://read-like-a-book-api.herokuapp.com/user/register', {
             id: "integration-testing",

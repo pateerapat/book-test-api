@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-e2e": "cypress run e2e-testing.js",
+    "test-int": "cypress run integration-testing.js",
+    "test-unit": "cypress run unit-testing.js",
     "start": "nodemon node server.js",
     "cypress:open": "cypress open"
   },
