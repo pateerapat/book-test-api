@@ -12,6 +12,7 @@ const {
     checkRegister,
     register,
     pointIncrementer,
+    deleteUser,
 } = require("../model/user-model");
 
 // Import Functions
@@ -137,5 +138,14 @@ module.exports = {
         } catch (err) {
             next(err);
         }
+    },
+    deleteUserController: async (req, res, next) => {
+        try {
+            const response = await deleteUser(req.body);
+            res.status(200).json(response);
+            res.end();
+        } catch (err) {
+            next(err);
+        };
     },
 };

@@ -225,4 +225,42 @@ module.exports = {
             console.log(err);
         };
     },
+    deleteUser: async (data) => {
+        try {
+            let response = await connect().then(async (mongoose) => {
+                try {
+                    await userSchema.deleteOne({
+                        id: data.id,
+                    });
+                    return result = {
+                        success: true,
+                    };
+                } catch (err) {
+                    return result = {
+                        success: false,
+                    };
+                } finally {
+                    mongoose.connection.close();
+                };
+            });
+            if (response.success) {
+                response = {
+                    success: true,
+                    payload: {
+                        message: "User has been unregisted.",
+                    },
+                };
+            } else {
+                response = {
+                    success: false,
+                    payload: {
+                        message: "Failed to unregisted.",
+                    },
+                };
+            };
+            return response;
+        } catch (err) {
+            console.log(err);
+        };
+    },
 };

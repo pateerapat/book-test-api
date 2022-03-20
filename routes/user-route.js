@@ -13,6 +13,7 @@ const {
     loginController,
     incrementController,
     getDataController,
+    deleteUserController,
 } = require("../controller/user-controller");
 
 // Create Routes
@@ -23,6 +24,8 @@ body("user_address").notEmpty(), body("email").notEmpty(), body("user_point").no
 router.post("/login", [body("id").notEmpty(), body("password").notEmpty()], apiValidation, loginController);
 
 router.post("/point", [body("id").notEmpty(), body("point").notEmpty()], apiValidation, verifyToken, incrementController);
+
+router.post("/unregister", [body("id").notEmpty()], apiValidation, deleteUserController);
 
 router.get("/get/data", apiValidation, verifyToken, getDataController);
 
