@@ -1,5 +1,4 @@
 // Config
-
 const mongoose = require("mongoose");
 const mongoPath = process.env.MONGODB_URI;
 

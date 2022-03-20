@@ -1,5 +1,4 @@
 // Config
-
 const { sign } = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");

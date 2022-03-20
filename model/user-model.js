@@ -1,5 +1,4 @@
 // Config
-
 const connect = require("../core/connect");
 const bcrypt = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
