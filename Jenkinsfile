@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage('Pull code') {
             steps {
-                git branch: 'development', url: 'https://github.com/pateerapat/read-like-a-book.git'
+                git branch: 'development', url: 'https://github.com/pateerapat/book-test-api.git'
             }
         }
         stage('Setup environment') {
             steps {
-                withEnv(['cookieKey=RLABWEBAPPLICATION']) {
+                withEnv(['SECRET=RLAB', 'MONGODB_URI=mongodb+srv://it-kmitl-book-service:rlYoI93uugf5H4sJ@book-service-east.zgdyk.mongodb.net/plt-book-service?retryWrites=true&w=majority']) {
                     // some block
                 }
             }
@@ -21,22 +21,17 @@ pipeline {
         }
         stage('Unit testing') {
             steps {
-                sh 'npx cypress run --spec "cypress/integration/unit-testing.js"'
+                sh 'npm run test-unit'
             }
         }
         stage('Integration testing') {
             steps {
-                sh 'npx cypress run --spec "cypress/integration/integration-testing.js"'
-            }
-        }
-        stage('Component testing') {
-            steps {
-                sh 'npx cypress run --spec "cypress/integration/component-testing.js"'
+                sh 'npm run test-int'
             }
         }
         stage('E2E testing') {
             steps {
-                sh 'npx cypress run --spec "cypress/integration/e2e-testing.js"'
+                sh 'npm run test-e2e'
             }
         }
     }
