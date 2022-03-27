@@ -10,7 +10,7 @@ pipeline {
         stage('Setup environment') {
             steps {
                 withCredentials([file(credentialsId: 'T12_ENV', variable: 'ENV_FILE')]) {
-                    echo '$ENV_FILE'
+                    sh "echo 'check = $ENV_FILE'"
                 }
             }
         }
