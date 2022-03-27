@@ -9,8 +9,10 @@ pipeline {
         }
         stage('Setup environment') {
             steps {
-                withCredentials([file(credentialsId: 'T12_ENV', variable: 'ENV')]) {
-                    sh 'use $ENV'
+                withCredentials([file(credentialsId: 'T12_ENV', variable: 'ENV_FILE')]) {
+                    dir('subdir') {
+                        sh 'use $ENV_FILE'
+                    }
                 }
             }
         }
