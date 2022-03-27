@@ -9,8 +9,8 @@ pipeline {
         }
         stage('Setup environment') {
             steps {
-                withCredentials([file(credentialsId: 'T12_ENV', variable: 'SECRET, MONGODB_URI')]) {
-                    // some block
+                withCredentials([file(credentialsId: 'T12_ENV', variable: 'ENV')]) {
+                    sh 'use $ENV'
                 }
             }
         }
