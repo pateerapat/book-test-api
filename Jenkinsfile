@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Setup environment') {
             steps {
-                withEnv(['SECRET=RLAB', 'MONGODB_URI=mongodb+srv://it-kmitl-book-service:rlYoI93uugf5H4sJ@book-service-east.zgdyk.mongodb.net/plt-book-service?retryWrites=true&w=majority']) {
+                withCredentials([file(credentialsId: 'T12_ENV', variable: '.env')]) {
                     // some block
                 }
             }
@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Integration testing') {
             steps {
-                sh 'npm run test-int'
+                sh 'npm run test-integration'
             }
         }
         stage('E2E testing') {
@@ -36,3 +36,4 @@ pipeline {
         }
     }
 }
+
