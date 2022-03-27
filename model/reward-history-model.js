@@ -1,8 +1,6 @@
 // Config
-
 const connect = require("../core/connect");
-const bcrypt = require("bcryptjs");
-const { sign } = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 // Import Schema
 const historySchema = require("../schemas/reward-history-schema");
@@ -15,9 +13,18 @@ module.exports = {
         try {
             let response = await connect().then(async (mongoose) => {
                 try {
+                    const userId = jwt.verify(
+                        query,
+                        process.env.SECRET,
+                        (err, authData) => {
+                            return {
+                                user_id: authData.result.id,
+                            };
+                        },
+                    );
                     let result = await historySchema.aggregate([
                         {
-                            $match: query,
+                            $match: userId,
                         },
                         {
                             $lookup: {

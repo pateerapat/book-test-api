@@ -2,6 +2,7 @@
 const connect = require("../core/connect");
 const bcrypt = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 // Import Schema
 const userSchema = require("../schemas/user-schema");
@@ -60,6 +61,8 @@ module.exports = {
         try {
             let response = await connect().then(async (mongoose) => {
                 try {
+                    const password = await bcrypt.hash(data.password, 10);
+                    data.password = password;
                     await new userSchema(data).save();
                     return result = {
                         success: true,
@@ -142,7 +145,7 @@ module.exports = {
             const userData = await connect().then(async (mongoose) => {
                 try {
                     let result = await userSchema.findOne({
-                        "id": query.id,
+                        id: query.id,
                     });
                     if (result == null) {
                         result = {
@@ -258,6 +261,25 @@ module.exports = {
                 };
             };
             return response;
+        } catch (err) {
+            console.log(err);
+        };
+    },
+    getUserData: async (data) => {
+        try {
+            const result = jwt.verify(
+                data,
+                process.env.SECRET,
+                (err, authData) => {
+                    return authData.result;
+                },
+            );
+            return {
+                success: true,
+                payload: {
+                    data: result,
+                }
+            };
         } catch (err) {
             console.log(err);
         };

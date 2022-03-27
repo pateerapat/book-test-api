@@ -1,8 +1,5 @@
 // Config
-
 const connect = require("../core/connect");
-const bcrypt = require("bcryptjs");
-const { sign } = require("jsonwebtoken");
 
 // Import Schema
 const rewardSchema = require("../schemas/reward-schema");
