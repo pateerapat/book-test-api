@@ -7,6 +7,13 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Setup environment') {
+            steps {
+                withCredentials([string(credentialsId: 'T12_01_SECRET', variable: 'SECRET'), string(credentialsId: 'T12_02_SECRET', variable: 'MONGODB_URI')]) {
+                    // some block
+                }
+            }
+        }
         stage('Download dependencies') {
             steps {
                 sh 'npm install'
