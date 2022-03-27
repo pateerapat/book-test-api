@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Setup environment') {
             steps {
-                withCredentials([file(credentialsId: 'T12_ENV', variable: '.env')]) {
+                withCredentials([file(credentialsId: 'T12_ENV', variable: 'SECRET, MONGODB_URI')]) {
                     // some block
                 }
             }
@@ -19,17 +19,17 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Unit testing') {
+        stage('Unit testing with coverage') {
             steps {
                 sh 'npm run test-unit'
             }
         }
-        stage('Integration testing') {
+        stage('Integration testing with coverage') {
             steps {
                 sh 'npm run test-integration'
             }
         }
-        stage('E2E testing') {
+        stage('E2E testing with coverage') {
             steps {
                 sh 'npm run test-e2e'
             }
