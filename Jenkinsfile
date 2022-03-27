@@ -7,13 +7,6 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Setup environment') {
-            steps {
-                withCredentials([file(credentialsId: 'T12_ENV', variable: 'ENV_FILE')]) {
-                    sh "echo 'check = $ENV_FILE'"
-                }
-            }
-        }
         stage('Download dependencies') {
             steps {
                 sh 'npm install'
