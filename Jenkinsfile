@@ -19,6 +19,11 @@ pipeline {
                 sh 'npm install'
             }
         }
+        stage('Deploy development branch') {
+            steps {
+                echo 'automatic deploy development branch to heroku'
+            }
+        }
         stage('Unit testing with coverage') {
             steps {
                 sh 'npm run test-unit'
@@ -32,6 +37,11 @@ pipeline {
         stage('E2E testing with coverage') {
             steps {
                 sh 'npm run test-e2e'
+            }
+        }
+        stage('Deploy main branch') {
+            steps {
+                echo 'automatic deploy main branch to heroku'
             }
         }
     }
