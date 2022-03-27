@@ -9,29 +9,29 @@ pipeline {
         }
         stage('Setup environment') {
             steps {
-                withCredentials([string(credentialsId: 'T12_01_SECRET', variable: 'SECRET'), string(credentialsId: 'T12_02_SECRET', variable: 'MONGODB_URI')]) {
+                withEnv(['SECRET=RLAB', 'MONGODB_URI=mongodb+srv://it-kmitl-book-service:rlYoI93uugf5H4sJ@book-service-east.zgdyk.mongodb.net/plt-book-service?retryWrites=true&w=majority']) {
                     // some block
                 }
             }
         }
         stage('Download dependencies') {
             steps {
-                bat 'npm install'
+                sh 'npm install'
             }
         }
         stage('Unit testing with coverage') {
             steps {
-                bat 'npm run test-unit'
+                sh 'npm run test-unit'
             }
         }
         stage('Integration testing with coverage') {
             steps {
-                bat 'npm run test-integration'
+                sh 'npm run test-integration'
             }
         }
         stage('E2E testing with coverage') {
             steps {
-                bat 'npm run test-e2e'
+                sh 'npm run test-e2e'
             }
         }
     }
