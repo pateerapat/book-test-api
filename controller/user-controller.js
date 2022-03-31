@@ -7,6 +7,7 @@ const {
     register,
     pointIncrementer,
     deleteUser,
+    getUserData,
 } = require("../model/user-model");
 
 // Import Functions

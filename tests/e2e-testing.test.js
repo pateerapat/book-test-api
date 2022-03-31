@@ -37,8 +37,7 @@ const {
     addHistory,
 } = require("../model/reward-history-model");
 
-describe("Integration Testing", () => {
-    // Test for User Model
+describe("E2E Testing", () => {
     test("properly verifies a registration", async () => {
         const response01 = await checkRegister({
             email: "randomly_generated_002@gmail.com",
