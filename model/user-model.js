@@ -267,19 +267,39 @@ module.exports = {
     },
     getUserData: async (data) => {
         try {
-            const result = jwt.verify(
-                data,
-                process.env.SECRET,
-                (err, authData) => {
-                    return authData.result;
-                },
-            );
-            return {
-                success: true,
-                payload: {
-                    data: result,
-                }
-            };
+            const response = await connect().then(async (mongoose) => {
+                try {
+                    const id = jwt.verify(
+                        data,
+                        process.env.SECRET,
+                        (err, authData) => {
+                            return authData.result.id;
+                        },
+                    );
+                    let result = await userSchema.find({
+                        id: id,
+                    });
+                    if (result.length == 0) {
+                        result = {
+                            success: false,
+                            payload: {
+                                message: "No data found.",
+                            },
+                        };
+                    } else {
+                        result = {
+                            success: true,
+                            payload: {
+                                data: result,
+                            },
+                        };
+                    };
+                    return result;
+                } finally {
+                    mongoose.connection.close();
+                };
+            });
+            return response;
         } catch (err) {
             console.log(err);
         };

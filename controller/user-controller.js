@@ -115,7 +115,7 @@ module.exports = {
     },
     getDataController: async (req, res, next) => {
         try {
-            const userData = getUserData(req.token);
+            const userData = await getUserData(req.token);
             res.status(200).json({
                 success: true,
                     payload: {
