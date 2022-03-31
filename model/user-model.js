@@ -290,7 +290,7 @@ module.exports = {
                         result = {
                             success: true,
                             payload: {
-                                data: result,
+                                data: result[0],
                             },
                         };
                     };
