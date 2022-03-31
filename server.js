@@ -4,7 +4,9 @@ const express = require("express");
 const bodyparser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
-dotenv.config();
+
+// dotenv.config();
+dotenv.config({ path: "./.env" });
 
 const PORT = process.env.PORT || 3000;
 
@@ -14,17 +16,27 @@ app.use(cors());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
+// Import Routes
+
+const routeUser = require("./routes/user-route");
+const routeBook = require("./routes/book-route");
+const routeOwnedBook = require("./routes/owned-book-route");
+const routeReward = require("./routes/reward-route");
+const routeRewardHistory = require("./routes/reward-history-route");
+
+// Routes
+
 app.get("/", (req, res) => {
     res.status(200).json({
         message: "THIS IS AN API",
     });
 });
 
-// Import Routes
-
-
-
-// Routes
+app.use("/user", routeUser);
+app.use("/book", routeBook);
+app.use("/owned-book", routeOwnedBook);
+app.use("/reward", routeReward);
+app.use("/history", routeRewardHistory);
 
 app.use((req, res, next) => {
     const err = new Error("Not Found");

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-e2e": "jest e2e-testing.test.js --coverage",
+    "test-integration": "jest integration-testing.test.js --coverage",
+    "test-unit": "jest --coverage unit-testing.test.js",
     "start": "nodemon node server.js"
   },
   "author": "",
@@ -17,6 +19,10 @@
     "express-validator": "^6.14.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-check-expiration": "^1.0.5",
+    "mongoose": "^6.2.4",
     "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
   }
 }
