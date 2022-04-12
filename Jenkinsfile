@@ -57,13 +57,12 @@ pipeline {
         }
         stage('Versioning') {
             steps {
-               withCredentials([gitUsernamePassword(credentialsId: 'T12_GIT_SECRET', gitToolName: 'Default')]) {
+                withCredentials([gitUsernamePassword(credentialsId: 'T12_GIT_SECRET', gitToolName: 'Default')]) {
                     sh 'git tag ' + 'v1.0.' + BUILD_NUMBER
                     sh 'git tag'
                     sh 'git push origin ' + 'v1.0.' + BUILD_NUMBER
-               }
+                }
             }
         }
     }
 }
-
