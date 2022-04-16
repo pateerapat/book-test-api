@@ -6,6 +6,7 @@ const { sign } = require("jsonwebtoken");
 
 // Import Schema
 const ownedBookSchema = require("../schemas/owned-book-schema");
+const { pointIncrementer } = require("./user-model");
 
 // Import Function
 
@@ -55,11 +56,21 @@ module.exports = {
             console.log(err);
         };
     },
-    buyBook: async (data) => {
+    buyBook: async (data, point) => {
         try {
+            await pointIncrementer({
+                id: data.user_id,
+                point: point,
+            });
             let response = await connect().then(async (mongoose) => {
                 try {
-                    await new ownedBookSchema(data).save();
+                    for (let i=0; i<data.book_id.length; i++) {
+                        await new ownedBookSchema({
+                            book_id: data.book_id[i],
+                            user_id: data.user_id,
+                        }).save();
+                    }
+                    
                     return result = {
                         success: true,
                     };
