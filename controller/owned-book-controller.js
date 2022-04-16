@@ -22,7 +22,7 @@ module.exports = {
             const response = await buyBook({
                 book_id: req.body.book_id,
                 user_id: userData.id,
-            });
+            }, req.body.point);
             res.status(200).json(response);
             res.end();
         } catch (err) {
