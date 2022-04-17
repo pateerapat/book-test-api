@@ -36,7 +36,7 @@ pipeline {
                         sshCommand remote: remote, command: 'git clone https://github.com/pateerapat/book-test-api.git'
                         sshCommand remote: remote, command: 'docker-compose -f book-test-api/docker-compose.yml up -d'
                         sshCommand remote: remote, command: 'rm -r book-test-api'
-                    }+
+                    }
                 }
             }
         }
