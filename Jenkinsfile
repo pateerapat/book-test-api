@@ -31,7 +31,7 @@ pipeline {
                         remote.name = 'T12'
                         remote.host = '159.223.45.216'
                         remote.user = 'root'
-                        remote.password = '${rootpass}'
+                        remote.password = "${rootpass}"
                         remote.allowAnyHosts = true
                         sshCommand remote: remote, command: 'git clone https://github.com/pateerapat/book-test-api.git'
                         sshCommand remote: remote, command: 'docker-compose -f book-test-api/docker-compose.yml up -d'
