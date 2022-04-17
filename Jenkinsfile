@@ -22,21 +22,21 @@ pipeline {
                 echo 'automatic deploy development branch to heroku'
             }
         }
-        stage('Unit testing with coverage') {
-            steps {
-                sh 'npm run test-unit'
-            }
-        }
-        stage('Integration testing with coverage') {
-            steps {
-                sh 'npm run test-integration'
-            }
-        }
-        stage('E2E testing with coverage') {
-            steps {
-                sh 'npm run test-e2e'
-            }
-        }
+        // stage('Unit testing with coverage') {
+        //     steps {
+        //         sh 'npm run test-unit'
+        //     }
+        // }
+        // stage('Integration testing with coverage') {
+        //     steps {
+        //         sh 'npm run test-integration'
+        //     }
+        // }
+        // stage('E2E testing with coverage') {
+        //     steps {
+        //         sh 'npm run test-e2e'
+        //     }
+        // }
         stage('Deploy main branch') {
             steps {
                 echo 'automatic deploy main branch to heroku and docker'
@@ -51,7 +51,7 @@ pipeline {
                         sshCommand remote: remote, command: 'git clone https://github.com/pateerapat/book-test-api.git'
                         sshCommand remote: remote, command: 'docker-compose -f book-test-api/docker-compose.yml up -d'
                         sshCommand remote: remote, command: 'rm -r book-test-api'
-                    }
+                    }+
                 }
             }
         }
