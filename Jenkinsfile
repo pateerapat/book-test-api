@@ -14,7 +14,30 @@ pipeline {
         }
         stage('Download dependencies') {
             steps {
-                sh 'npm install'
+                dir('Backend') {
+                    sh 'npm install'
+                }
+            }
+        }
+        stage('Unit testing with coverage') {
+            steps {
+                dir('Backend') {
+                    sh 'npm run test-unit'
+                }
+            }
+        }
+        stage('Integration testing with coverage') {
+            steps {
+                dir('Backend') {
+                    sh 'npm run test-integration'
+                }
+            }
+        }
+        stage('E2E testing with coverage') {
+            steps {
+                dir('Backend') {
+                    sh 'npm run test-e2e'
+                }
             }
         }
         stage('Deploy development branch') {
@@ -33,9 +56,9 @@ pipeline {
                         remote.user = 'root'
                         remote.password = "${rootpass}"
                         remote.allowAnyHosts = true
-                        sshCommand remote: remote, command: 'git clone https://github.com/pateerapat/book-test-api.git'
-                        sshCommand remote: remote, command: 'docker-compose -f book-test-api/docker-compose.yml up -d'
-                        sshCommand remote: remote, command: 'rm -r book-test-api'
+                        sshCommand remote: remote, command: 'git clone https://github.com/bambam4334/Project-SW-Dev.git'
+                        sshCommand remote: remote, command: 'docker-compose -f Project-SW-Dev/Backend/docker-compose.yml up -d'
+                        sshCommand remote: remote, command: 'rm -r Project-SW-Dev'
                     }
                 }
             }
